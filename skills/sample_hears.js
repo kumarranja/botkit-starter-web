@@ -7,20 +7,23 @@ module.exports = function(controller) {
 
   });
 
-  controller.hears('typing','message_received', function(bot, message) {
+    controller.hears('Hello','message_received', function(bot, message) {
 
-    bot.reply(message,{
-      text: 'This message used the automatic typing delay',
-      typing: true,
-    }, function() {
-
-      bot.reply(message,{
-        text: 'This message specified a 5000ms typing delay',
-        typingDelay: 5000,
-      });
+        bot.reply(message, "Hi ! I'm web Bot.");
 
     });
 
-  });
+    controller.hears('conv','message_received', function(bot, message) {
 
-}
+        bot.startConversation(message, function (err, convo) {
+            convo.ask('What should I call you?', function(response, convo) {
+                bot.reply(response, "I will call you : " + response.text);
+                convo.next();
+            });
+
+        });
+
+        });
+
+
+};
